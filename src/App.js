@@ -3,7 +3,8 @@ import PouchDB from 'pouchdb-browser';
 import injectSheet from 'react-jss';
 import PropTypes from 'proptypes';
 import TextField from 'material-ui/TextField';
-import InfiniteScroll from './InfiniteScroll.js';
+import InfiniteScroll from '@doodle3d/react-infinite-scroller';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const NUM_ITEMS = 10;
 const DB = new PouchDB(process.env.DB_URL);
@@ -104,7 +105,11 @@ class App extends React.Component {
           />
         </span>
         <span className={classes.thumbContainer}>
-          <InfiniteScroll hasMore={thumbs.length < ids.length} loadMore={this.loadMore}>
+          <InfiniteScroll
+            hasMore={thumbs.length < ids.length}
+            loadMore={this.loadMore}
+            loader={<CircularProgress style={{ margin: '0 auto', display: 'block' }} />}
+          >
             <div className={classes.grid}>
               {thumbs.map(thumb => <div className={classes.thumb}>
                 <img src={thumb._attachments.img.data} />
